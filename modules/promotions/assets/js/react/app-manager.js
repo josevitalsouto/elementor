@@ -1,4 +1,5 @@
 import App from './app';
+import { resolvePromotionAnimation } from './atomic-promotion-media';
 import { bindPreviewIframeEvents } from 'elementor-editor-utils/preview-iframe-listeners';
 import { __ } from '@wordpress/i18n';
 import { createRoot } from 'react-dom/client';
@@ -10,16 +11,12 @@ export class AppManager {
 		this.onRoute = () => {};
 		this.unbindIframeEvents = () => {};
 
-		this.attachAtomicFormListeners();
+		this.attachAtomicWidgetPromotionListeners();
 		this.attachWidgetPromotionListeners();
 	}
 
 	getPromotionData( promotionType ) {
 		return elementorPromotionsData[ promotionType ] || {};
-	}
-
-	getAtomicFormPromotionData() {
-		return elementor?.config?.atomicFormPromotion || {};
 	}
 
 	resolveWidgetPromotionData( detail ) {
