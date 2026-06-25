@@ -104,11 +104,6 @@ export class AppManager {
 		);
 	}
 
-<<<<<<< HEAD
-	attachAtomicFormListeners() {
-		document.addEventListener( 'atomic-form-promotion:open', ( event ) => {
-			const promotionData = this.getAtomicFormPromotionData();
-=======
 	resolveAtomicWidgetPromotionCardProps( { cardType, content } ) {
 		return {
 			cardType,
@@ -122,12 +117,17 @@ export class AppManager {
 			} ),
 		};
 	}
->>>>>>> 5c054e1fc4 (Fix: The 'Connect & Activate' for locked widget is missing [ED-24729])
 
-			this.mountCard( event.detail.target, 'e-atomic-form-promotion-wrapper', {
-				cardType: 'atomicForm',
-				promotionData,
-				ctaUrl: promotionData.widgetCtaUrl,
+	attachAtomicWidgetPromotionListeners() {
+		const promotions = elementor?.config?.atomicWidgetPromotions || [];
+
+		promotions.forEach( ( { type, cardType, content } ) => {
+			document.addEventListener( `${ type }-promotion:open`, ( event ) => {
+				this.mountCard(
+					event.detail.target,
+					`e-${ type }-promotion-wrapper`,
+					this.resolveAtomicWidgetPromotionCardProps( { cardType, content } ),
+				);
 			} );
 		} );
 	}
